@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>React.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="libraries/react.development.js"></script>
+    <script src="libraries/react-dom.development.js"></script>
+    <script src="libraries/babel.min.js"></script>
+    <style type="text/css">
+        body {
+            color: #313157;
+            font-family: "Consolas", serif;
+            font-size: 20pt;
+            text-shadow: 1px 1px 1px #777777;
+        }
+
+        input {
+            color: #313157;
+            font-family: "Consolas", serif;
+            font-size: 20pt;
+            text-shadow: 1px 1px 1px #777777;
+
+            height: 30px;
+            width: 300px;
+
+            border-style: solid;
+            border-radius: 2px;
+            border-color: #313157;
+
+            outline-style: none;
+        }
+
+        #wrapper {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #root {
+            width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/babel">
+        function App() {
+            const cities = ['Санкт-Петербург', 'Лондон', 'Минск',
+                            'Казань', 'Киото', 'Новосибирск',
+                            'Париж', 'Владивосток', 'Детройт', 'Дюссельдорф'];
+            const [value, setValue] = React.useState('');
+
+            function renderCities(arr) {
+                if (arr.length === 0) {
+                    return <span>
+                        Таких городов нет :с
+                    </span>
+                }
+                return arr.map((city) =>
+                    <li key={city}>
+                        {city}
+                    </li>)
+            }
+
+            function getSearchCity() {
+                let sortedCities = [];
+                for (let i = 0; i < cities.length; i++) {
+                    if (cities[i].toLowerCase().includes(value.toLowerCase())) { // или cities[i].toLowerCase().indexOf(value.toLowerCase() !== -1
+                        sortedCities.push(cities[i]);
+                    }
+                }
+                return sortedCities;
+            }
+
+            function filtrate() {
+                return cities.filter(city => {
+                    return city.toLowerCase().includes(value.toLowerCase());
+                });
+            }
+
+            return <>
+                <h2>Cities</h2>
+                <label>
+                    <input
+                        type="text"
+                        value={value}
+                        onChange={e => setValue(e.target.value)}
+                    />
+                </label>
+                <br/>
+                <label>
+                    {renderCities(filtrate())} {/*getSearchCity()*/}
+                </label>
+            </>;
+        }
+        ReactDOM.render(<App/>, document.getElementById('root'));
+    </script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="root"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>React.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="libraries/react.development.js"></script>
+    <script src="libraries/react-dom.development.js"></script>
+    <script src="libraries/babel.min.js"></script>
+    <style type="text/css">
+        body {
+            color: #708090;
+            font-family: "Consolas", serif;
+            font-size: 16pt;
+            text-shadow: 1px 1px 1px #a3a3a3;
+        }
+
+        button {
+            margin: 1%;
+        }
+
+        .addBtn {
+            height: 30px;
+            width: 150px;
+
+            border-style: none;
+            background-color: #708090;
+
+            color: #ffffff;
+            font-size: 12pt;
+
+            outline-style: none;
+        }
+
+        .deleteBtn {
+            height: 30px;
+            width: 30px;
+
+            border-style: none;
+            background-color: #708090;
+
+            color: #ffffff;
+            font-size: 12pt;
+
+            outline-style: none;
+        }
+
+        input {
+            height: 30px;
+            width: 400px;
+
+            border-style: solid;
+
+            outline-style: none;
+        }
+
+        .check {
+            height: 30px;
+            width: 30px;
+
+            border-style: solid;
+
+            outline-style: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        #wrapper {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #root {
+            width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/babel">
+        function Item({ item, remove, index }) {
+            return <li>
+                <label>
+                    <input
+                        type="checkbox"
+                        className="check"
+                    />
+                    {item}
+                    <button className="deleteBtn" onClick={() => remove(index)}>x</button>
+                </label>
+            </li>
+        }
+
+        function List({ list, remove }) {
+            return <ul>
+                {list.map((item, index) => (
+                    <Item
+                        item={item}
+                        index={index}
+                        remove={remove}
+                    />
+                    ))}
+            </ul>
+        }
+
+        function App() {
+            const [value, setValue] = React.useState('');
+            const [list, setList] = React.useState([]);
+            const inputRef = React.useRef(null);
+
+            function handleAdd(event) {
+                event.preventDefault();
+                if (value === '') {
+                    alert("Пожалуйста, введите текст");
+                }
+                else {
+                    setList([...list, value]);
+                    setValue('');
+                    inputRef.current.focus();
+                }
+            }
+
+            function handleDelete(index) {
+                list.splice(index, 1);
+                setList([...list]);
+            }
+
+            return <>
+                <h2>Список дел</h2>
+                <form onSubmit={event => handleAdd(event)}>
+                    <label>
+                        <input
+                            type="text"
+                            value={value}
+                            ref={inputRef}
+                            onChange={e => setValue(e.target.value)}
+                        />
+                        <br/>
+                        <button
+                            type="submit"
+                            className="addBtn"
+                            onClick={(event) => handleAdd(event)}>
+                            Добавить
+                        </button>
+                    </label>
+                    <br/>
+                    <label>
+                        Только сделанные:
+                        <input type="checkbox" />
+                    </label>
+                    <List list={list} />
+                </form>
+            </>;
+        }
+        ReactDOM.render(<App/>, document.getElementById('root'));
+    </script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="root"></div>
+</div>
+</body>
+</html>

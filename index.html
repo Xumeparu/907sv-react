@@ -10,26 +10,56 @@
     <script src="libraries/react-dom.development.js"></script>
     <script src="libraries/babel.min.js"></script>
     <style type="text/css">
+        body {
+            color: #1a1a1a;
+            font-family: "Consolas", serif;
+            font-size: 20pt;
+        }
+
+        .red, .yellow, .green {
+            height: 200px;
+            width: 200px;
+
+            border-radius: 100%;
+
+            margin: 2%;
+        }
+
+        .red {
+            color: #cf0d0d;
+            background-color: #cf0d0d;
+        }
+
+        .yellow {
+            color: #ecc717;
+            background-color: #ecc717;
+        }
+
+        .green {
+            color: #34a034;
+            background-color: #34a034;
+        }
+
         #wrapper {
             padding: 20px;
             text-align: center;
         }
 
         #root {
-            width: 800px;
+            width: 1200px;
             margin: 0 auto;
         }
     </style>
     <script type="text/babel">
         function App() {
-            const [count, setCount] = React.useState(0);
+
             return <>
-                <button onClick={() => setCount(count - 1)}>-</button>&nbsp;
-                {count}&nbsp;
-                <button onClick={() => setCount(count + 1)}>+</button>
+                <h2>Traffic light</h2>
+                <div className='red' onC></div>
+                <div className='yellow'></div>
+                <div className='green'></div>
             </>;
         }
-
         ReactDOM.render(<App/>, document.getElementById('root'));
     </script>
 </head>

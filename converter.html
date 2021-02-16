@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>React.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="libraries/react.development.js"></script>
+    <script src="libraries/react-dom.development.js"></script>
+    <script src="libraries/babel.min.js"></script>
+    <style type="text/css">
+        body {
+            color: #c8a7d6;
+            font-family: "Consolas", serif;
+            font-size: 20pt;
+            text-shadow: 1px 1px 1px #777777;
+        }
+
+        input {
+            color: #c8a7d6;
+            font-family: "Consolas", serif;
+            font-size: 20pt;
+            text-shadow: 1px 1px 1px #777777;
+
+            height: 30px;
+            width: 300px;
+
+            border-style: solid;
+            border-radius: 2px;
+            border-color: #c8a7d6;
+
+            outline-style: none;
+
+            margin: 1%;
+        }
+
+        select {
+            color: #c8a7d6;
+            font-family: "Consolas", serif;
+            font-size: 20pt;
+            text-shadow: 1px 1px 1px #777777;
+
+            height: 35px;
+            width: 55px;
+
+            border-style: solid;
+            border-radius: 2px;
+            border-color: #c8a7d6;
+
+            outline-style: none;
+
+            margin-left: 1%;
+        }
+
+        img {
+            height: 100px;
+            width: 100px;
+        }
+
+        #wrapper {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #root {
+            width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/babel">
+        function App() {
+            const [number, setNumber] = React.useState(0);
+            const systemBase = [2, 8, 16, 36];
+            const [currentSystemBase, setCurrentSystemBase] = React.useState(0);
+
+            function handleChangeNumber(e) {
+                let newValue = Number(e.target.value);
+                newValue = Number.isNaN(newValue) ? 0 : newValue;
+                setNumber(newValue);
+            }
+
+            function handleOperationChange(e) {
+                setCurrentSystemBase(Array.from(e.target.selectedOptions, item => item.value));
+            }
+
+            function getResult() {
+                switch (systemBase[currentSystemBase]) {
+                    case 2:
+                        return Number(number).toString(2);
+                    case 8:
+                        return Number(number).toString(8);
+                    case 16:
+                        return Number(number).toString(16);
+                    case 36:
+                        return Number(number).toString(36);
+                }
+            }
+
+            return <>
+                <h2>Converter</h2>
+                <label>
+                    <input
+                        type="text"
+                        value={number}
+                        onChange={handleChangeNumber}
+                    /> в 10
+                </label>
+                <br/>
+                <label>
+                    <input
+                        type="text"
+                        value={getResult()}
+                        readOnly={true}
+                    /> в
+                </label>
+                <label>
+                    <select onChange={handleOperationChange}>
+                        {systemBase.map((systemBase, index) => (
+                            <option key={index} value={index}>
+                                {systemBase}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <br/>
+                <img src="images/cat.gif" alt=""/>
+            </>;
+        }
+        ReactDOM.render(<App/>, document.getElementById('root'));
+    </script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="root"></div>
+</div>
+</body>
+</html>

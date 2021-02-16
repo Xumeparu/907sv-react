@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>React.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="libraries/react.development.js"></script>
+    <script src="libraries/react-dom.development.js"></script>
+    <script src="libraries/babel.min.js"></script>
+    <style type="text/css">
+        body {
+            color: #6d78a8;
+            font-family: "Consolas", serif;
+            font-size: 20pt;
+            text-shadow: 1px 1px 1px #777777;
+        }
+
+        input {
+            color: #ffffff;
+            font-family: "Consolas", serif;
+            font-size: 16pt;
+            text-shadow: 1px 1px 1px #777777;
+
+            height: 30px;
+            width: 200px;
+            background-color: #6d78a8;
+
+            border-style: none;
+            border-radius: 2px;
+
+            outline-style: none;
+
+            margin: 1%;
+        }
+
+        #wrapper {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #root {
+            width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/babel">
+        function App() {
+            const [celsius, setCelsius] = React.useState('');
+            const [fahrenheit, setFahrenheit] = React.useState('');
+
+            function handleChangeCelsius(e) {
+                let newValue = Number(e.target.value);
+                newValue = Number.isNaN(newValue) ? 0 : newValue;
+                setCelsius(newValue);
+                setFahrenheit(newValue * 9 / 5 + 32)
+            }
+
+            function handleChangeFahrenheit(e) {
+                let newValue = Number(e.target.value);
+                newValue = Number.isNaN(newValue) ? 0 : newValue;
+                setFahrenheit(newValue);
+                setCelsius((newValue - 32) * 5 / 9)
+            }
+
+            return <>
+                <h2>Конвертер градусов</h2>
+                <label> Температура, °С
+                    <input
+                        type="text"
+                        value={celsius}
+                        onChange={handleChangeCelsius}
+                    />
+                </label>
+                <br/>
+                <label> Температура, °F
+                    <input
+                        type="text"
+                        value={fahrenheit}
+                        onChange={handleChangeFahrenheit}
+                    />
+                </label>
+            </>;
+        }
+
+        ReactDOM.render(<App/>, document.getElementById('root'));
+    </script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="root"></div>
+</div>
+</body>
+</html>

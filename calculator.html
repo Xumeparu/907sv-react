@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>React.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="libraries/react.development.js"></script>
+    <script src="libraries/react-dom.development.js"></script>
+    <script src="libraries/babel.min.js"></script>
+    <style type="text/css">
+        body {
+            color: #a6d694;
+            font-family: "Consolas", serif;
+            font-size: 20pt;
+            text-shadow: 1px 1px 1px #777777;
+        }
+
+        input {
+            color: #a6d694;
+            font-family: "Consolas", serif;
+            font-size: 16pt;
+            text-shadow: 1px 1px 1px #777777;
+
+            height: 30px;
+            width: 200px;
+
+            border-style: solid;
+            border-radius: 2px;
+            border-color: #a6d694;
+
+            outline-style: none;
+
+            margin: 1%;
+        }
+
+        select {
+            color: #a6d694;
+            font-family: "Consolas", serif;
+            font-size: 16pt;
+            text-shadow: 1px 1px 1px #777777;
+
+            height: 35px;
+            width: 35px;
+
+            border-style: solid;
+            border-radius: 2px;
+            border-color: #a6d694;
+
+            outline-style: none;
+        }
+
+        #wrapper {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #root {
+            width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/babel">
+        function App() {
+            const [firstOperand, setFirstOperand] = React.useState('');
+            const [secondOperand, setSecondOperand] = React.useState('');
+            const operations = ['+', '-', '*', '/'];
+            const [currentOperation, setCurrentOperation] = React.useState(0);
+
+            function handleChangeFirstOperand(e) {
+                let newValue = Number(e.target.value);
+                newValue = Number.isNaN(newValue) ? 0 : newValue;
+                setFirstOperand(newValue);
+            }
+
+            function handleChangeSecondOperand(e) {
+                let newValue = Number(e.target.value);
+                newValue = Number.isNaN(newValue) ? 0 : newValue;
+                setSecondOperand(newValue);
+            }
+
+            function handleOperationChange(e) {
+                setCurrentOperation(Array.from(e.target.selectedOptions, item => item.value));
+            }
+
+            function getResult() {
+                switch (operations[currentOperation]) {
+                    case '+':
+                        return firstOperand + secondOperand;
+                    case '-':
+                        return firstOperand - secondOperand;
+                    case '*':
+                        return firstOperand * secondOperand;
+                    case '/':
+                        return firstOperand / secondOperand;
+                }
+            }
+
+            return <>
+                <h2>Calculator</h2>
+                <label>
+                    <input
+                        type="text"
+                        value={firstOperand}
+                        onChange={handleChangeFirstOperand}
+                    />
+                </label>
+                <label>
+                    <select onChange={handleOperationChange}>
+                        {operations.map((operation, index) => (
+                            <option key={index} value={index}>
+                                {operation}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label>
+                    <input
+                        type="text"
+                        value={secondOperand}
+                        onChange={handleChangeSecondOperand}
+                    />
+                </label>
+                <label>=
+                    <input
+                        type="text"
+                        value={getResult()}
+                        readOnly={true}
+                    />
+                </label>
+            </>;
+        }
+        ReactDOM.render(<App/>, document.getElementById('root'));
+    </script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="root"></div>
+</div>
+</body>
+</html>

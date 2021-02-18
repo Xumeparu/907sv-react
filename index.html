@@ -61,25 +61,36 @@
                 YELLOW_GREEN: 'yellow_green'
             }
 
+            const interval = {
+                STOP: 3000,
+                WAIT: 1000,
+                GO: 3000
+            }
+
             const [status, setStatus] = React.useState(states.RED);
 
             React.useEffect(() => {
-                setInterval(changeColor, 1000)},[]
+                setTimeout(() => changeColor(), interval.STOP)},[]
             );
 
             function changeColor() {
                 setStatus((status) => {
+                    console.log(status);
                     if (status === states.RED) {
-                        setStatus(states.YELLOW);
+                        setTimeout(() => changeColor(), interval.WAIT);
+                        return states.YELLOW;
                     }
                     else if (status === states.YELLOW) {
-                        setStatus(states.GREEN);
+                        setTimeout(() => changeColor(), interval.GO);
+                        return states.GREEN;
                     }
                     else if (status === states.GREEN) {
-                        setStatus(states.YELLOW_GREEN);
+                        setTimeout(() => changeColor(), interval.WAIT);
+                        return states.YELLOW_GREEN;
                     }
-                    else {
-                        setStatus(states.RED);
+                    else if (status === states.YELLOW_GREEN) {
+                        setTimeout(() => changeColor(), interval.STOP);
+                        return states.RED;
                     }
                 });
             }

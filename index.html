@@ -16,28 +16,30 @@
             font-size: 20pt;
         }
 
-        .red, .yellow, .green {
-            height: 200px;
-            width: 200px;
+        .lamp {
+            height: 100px;
+            width: 100px;
 
-            border-radius: 100%;
+            color: #ffffff;
+            font-size: 60pt;
 
-            margin: 2%;
+            background-color: #323232;
+            border-radius: 50%;
+
+            margin: 1%;
+            padding: 5%;
+        }
+
+        .green {
+            background-color: #34a034;
         }
 
         .red {
-            color: #cf0d0d;
             background-color: #cf0d0d;
         }
 
         .yellow {
-            color: #ecc717;
             background-color: #ecc717;
-        }
-
-        .green {
-            color: #34a034;
-            background-color: #34a034;
         }
 
         #wrapper {
@@ -52,12 +54,41 @@
     </style>
     <script type="text/babel">
         function App() {
+            const states = {
+                RED: 'red',
+                YELLOW: 'yellow',
+                GREEN: 'green',
+                YELLOW_GREEN: 'yellow_green'
+            }
+
+            const [status, setStatus] = React.useState(states.RED);
+
+            React.useEffect(() => {
+                setInterval(changeColor, 1000)},[]
+            );
+
+            function changeColor() {
+                setStatus((status) => {
+                    if (status === states.RED) {
+                        setStatus(states.YELLOW);
+                    }
+                    else if (status === states.YELLOW) {
+                        setStatus(states.GREEN);
+                    }
+                    else if (status === states.GREEN) {
+                        setStatus(states.YELLOW_GREEN);
+                    }
+                    else {
+                        setStatus(states.RED);
+                    }
+                });
+            }
 
             return <>
-                <h2>Traffic light</h2>
-                <div className='red' onC></div>
-                <div className='yellow'></div>
-                <div className='green'></div>
+                <h2>Traffic-light</h2>
+                <div className={'lamp ' + (status ===  states.RED ? 'red' : '')}/>
+                <div className={'lamp ' + (status === states.YELLOW || status === states.YELLOW_GREEN ? 'yellow' : '')}/>
+                <div className={'lamp ' + (status === states.GREEN ? 'green' : '')}/>
             </>;
         }
         ReactDOM.render(<App/>, document.getElementById('root'));
